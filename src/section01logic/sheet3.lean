@@ -35,56 +35,34 @@ and the following tactics may also be useful:
 variables (P Q R : Prop)
 
 example : ¬ true → false :=
-begin
-  sorry
-end
+λ f, f ⟨⟩
 
 example : false → ¬ true :=
-begin
-  sorry
-end
+λ x _, x
 
 example : ¬ false → true :=
-begin
-  sorry
-end
+λ _, ⟨⟩
 
 example : true → ¬ false :=
-begin
-  sorry
-end
+λ _ x, x
 
 example : false → ¬ P :=
-begin
-  sorry
-end
+λ x _, x
 
 example : P → ¬ P → false :=
-begin
-  sorry
-end
+λ x f, f x
 
 example : P → ¬ (¬ P) :=
-begin
-  sorry
-end
+λ x f, f x
 
 example : (P → Q) → (¬ Q → ¬ P) :=
-begin
-  sorry
-end
+λ f g, g∘f
 
 example : ¬ ¬ false → false :=
-begin
-  sorry
-end
+λ f, f id
 
 example : ¬ ¬ P → P :=
-begin
-  sorry
-end
+by_contra
 
 example : (¬ Q → ¬ P) → (P → Q) :=
-begin
-  sorry,
-end
+λ f x, by_contra (λ y, (f y) x)

@@ -25,51 +25,31 @@ and also the following two new tactics:
 variables (P Q R S : Prop)
 
 example : P ↔ P :=
-begin
-  sorry
-end
+iff.rfl
 
 example : (P ↔ Q) → (Q ↔ P) :=
-begin
-  sorry
-end
+iff.symm
 
 example : (P ↔ Q) ↔ (Q ↔ P) :=
-begin
-  sorry
-end
+iff.comm
 
 example : (P ↔ Q) → (Q ↔ R) → (P ↔ R) :=
-begin
-  sorry
-end
+iff.trans
 
 example : P ∧ Q ↔ Q ∧ P :=
-begin
-  sorry
-end
+and.comm
 
 example : ((P ∧ Q) ∧ R) ↔ (P ∧ (Q ∧ R)) :=
-begin
-  sorry
-end
+and.assoc
 
 example : P ↔ (P ∧ true) :=
-begin
-  sorry
-end
+(and_true P).symm
 
 example : false ↔ (P ∧ false) :=
-begin
-  sorry
-end
+(and_false P).symm
 
 example : (P ↔ Q) → (R ↔ S) → (P ∧ R ↔ Q ∧ S) :=
-begin
-  sorry
-end
+iff.and
 
 example : ¬ (P ↔ ¬ P) :=
-begin
-  sorry,
-end
+λ h, let x := h.mpr (λ x, h.mp x x) in h.mp x x

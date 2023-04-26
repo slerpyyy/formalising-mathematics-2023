@@ -23,10 +23,10 @@ So `set X` could have been called `subset X` or `powerset X`; I guess they chose
 because it was the shortest.
 
 Note that `X` is a type, but `A` is a term; the type of `A` is `set X`. This means
-that `a : A` doesn't make sense. What we say instead is `a : X` and `a ∈ A`. 
-Of course `a ∈ A` is a true-false statement, so `a ∈ A : Prop`. 
+that `a : A` doesn't make sense. What we say instead is `a : X` and `a ∈ A`.
+Of course `a ∈ A` is a true-false statement, so `a ∈ A : Prop`.
 
-All the sets `A`, `B`, `C` etc we consider will be subsets of `X`. 
+All the sets `A`, `B`, `C` etc we consider will be subsets of `X`.
 If `x : X` then `x` may or may not be an element of `A`, `B`, `C`,
 but it will always be a term of type `X`.
 
@@ -46,7 +46,7 @@ Here are some mathematical facts:
 
 `A ⊆ B` is equivalent to `∀ x, x ∈ A → x ∈ B`;
 `x ∈ A ∪ B` is equivalent to `x ∈ A ∨ x ∈ B`;
-`x ∈ A ∩ B` is equivalent to `x ∈ A ∧ x ∈ B`. 
+`x ∈ A ∩ B` is equivalent to `x ∈ A ∧ x ∈ B`.
 
 All of these things are true *by definition* in Lean. Let's
 check this.
@@ -78,14 +78,10 @@ Let's prove some theorems.
 -/
 
 example : A ⊆ A :=
-begin
-  sorry,
-end
+λ _, id
 
 example : A ⊆ B → B ⊆ C → A ⊆ C :=
-begin
-  sorry,
-end
+λ f g x h, g (f h)
 
 example : A ⊆ A ∪ B :=
 begin

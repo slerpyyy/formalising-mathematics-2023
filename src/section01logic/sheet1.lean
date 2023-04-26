@@ -45,7 +45,7 @@ letters like `P`, `Q`, `R` denote propositions
 (i.e. true/false statements) and variables whose names begin
 with `h` like `h1` or `hP` are proofs or hypotheses.
 
--/ 
+-/
 
 -- Throughout this sheet, `P`, `Q` and `R` will denote propositions.
 variables (P Q R : Prop)
@@ -66,7 +66,7 @@ begin
   exact fish -- `fish` is the name of the assumption that `P` is true (but `hP` is a better name)
 end
 
--- Assume `Q` is true. Prove that `P → Q`. 
+-- Assume `Q` is true. Prove that `P → Q`.
 example (hQ : Q) : P → Q :=
 begin
   -- The goal is of the form `X → Y` so we can use `intro`
@@ -97,9 +97,7 @@ using `intro`, `exact` and `apply`.
 
 /-- Every proposition implies itself. -/
 example : P → P :=
-begin
-  sorry
-end
+id
 
 /-
 
@@ -111,38 +109,30 @@ So if we write `P → Q → R` then we'd better know what this means.
 The convention in Lean is that it means `P → (Q → R)`. If you think
 about it, this means that to deduce `R` you will need to prove both `P`
 and `Q`. In general to prove `P1 → P2 → P3 → ... Pn` you can assume
-`P1`, `P2`,...,`P(n-1)` and then you have to prove `Pn`. 
+`P1`, `P2`,...,`P(n-1)` and then you have to prove `Pn`.
 
 So the next level is asking you prove that `P → (Q → P)`.
 
 -/
 example : P → Q → P :=
-begin
-  sorry
-end
+λ x y, x
 
-/-- If we know `P`, and we also know `P → Q`, we can deduce `Q`. 
+/-- If we know `P`, and we also know `P → Q`, we can deduce `Q`.
 This is called "Modus Ponens" by logicians. -/
 example : P → (P → Q) → Q :=
-begin
-  sorry
-end
+λ x f, f x
 
 /-- `→` is transitive. That is, if `P → Q` and `Q → R` are true, then
   so is `P → R`. -/
 example : (P → Q) → (Q → R) → (P → R) :=
-begin
-  sorry,
-end
+λ f g, g∘f
 
 -- If `h : P → Q → R` with goal `⊢ R` and you `apply h`, you'll get
 -- two goals! Note that tactics operate on only the first goal.
 example : (P → Q → R) → (P → Q) → (P → R) :=
-begin
-  sorry
-end
+λ f g x, f x (g x)
 
-/- 
+/-
 
 Here are some harder puzzles. They won't teach you anything new about
 Lean, they're just trickier. If you're not into logic puzzles
@@ -155,34 +145,22 @@ in this section, where you'll learn some more tactics.
 variables (S T : Prop)
 
 example : (P → R) → (S → Q) → (R → T) → (Q → R) → S → T :=
-begin
-  sorry
-end
+λ _ f g h, g∘h∘f
 
 example : (P → Q) → ((P → Q) → P) → Q :=
-begin
-  sorry
-end
+λ f g, f (g f)
 
 example : ((P → Q) → R) → ((Q → R) → P) → ((R → P) → Q) → P :=
-begin
-  sorry
-end
+λ f g _, g (λ x, f (λ _, x))
 
 example : ((Q → P) → P) → (Q → R) → (R → P) → P :=
-begin
-  sorry
-end
+λ f g h, f (λ x, h (g x))
 
 example : (((P → Q) → Q) → Q) → (P → Q) :=
-begin
-  sorry
-end
+λ f x, f (λ g, g x)
 
 example :
   (((P → Q → Q) → ((P → Q) → Q)) → R) →
   ((((P → P) → Q) → (P → P → Q)) → R) →
   (((P → P → Q) → ((P → P) → Q)) → R) → R :=
-begin
-  sorry
-end
+λ _ f _, f (λ g _ _, g id)

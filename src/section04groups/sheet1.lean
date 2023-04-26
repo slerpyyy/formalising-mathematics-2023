@@ -28,22 +28,22 @@ variables (G : Type) [group G]
 example (g : G) : g⁻¹ * g = 1 :=
 begin
   /- The tactic state now looks like this:
-  
+
   G : Type
   _inst_1 : group G
   g : G
   ⊢ g⁻¹ * g = 1
-  
+
   So G is what most mathematicians would call a "set", and what in this course
   we call a "type" (they're the same thing as far as you're concerned), and
-  `g : G` just mean "g is an element of G". The remaining thing is this 
+  `g : G` just mean "g is an element of G". The remaining thing is this
   `_inst_1` thing, and that means "G has a multiplication `*`, an identity `1`,
   an inverse function `⁻¹`, and satisfies all the group axioms; furthermore
   all of this will be taken care of by "instances", which are a part
   of Lean's "type class inference system". The type class inference system
   is the system which deals with stuff in square brackets. You don't have
   to worry about it right now -- all that matters is that you have access
-  to all the group axioms. This one is called `inv_mul_self g`. 
+  to all the group axioms. This one is called `inv_mul_self g`.
   -/
   exact inv_mul_self g,
 end
@@ -55,25 +55,17 @@ end
 -- the names of the axioms. For example what do you think the proof of `1 * a = a` is called?
 
 example (a b c : G) : (a * b) * c = a * (b * c) :=
-begin
-  sorry
-end
+mul_assoc a b c
 
 example (a : G) : a * 1 = a :=
-begin
-  sorry
-end
+mul_one a
 
 -- Can you guess the last two?
 example (a : G) : 1 * a = a :=
-begin
-  sorry
-end
+one_mul a
 
 example (a : G) : a * a⁻¹ = 1 :=
-begin
-  sorry
-end
+mul_inv_self a
 
 -- As well as the axioms, Lean has many other standard facts which are true
 -- in all groups. See if you can prove these from the axioms, or find them
@@ -84,14 +76,10 @@ variables (a b c : G)
 
 
 example : a⁻¹ * (a * b) = b :=
-begin
-  sorry
-end
+by rw [←mul_assoc, inv_mul_self, one_mul]
 
 example : a * (a⁻¹ * b) = b :=
-begin
-  sorry
-end
+by rw [←mul_assoc, mul_inv_self, one_mul]
 
 example {a b c : G} (h1 : b * a = 1) (h2 : a * c = 1) : b = c :=
 begin
@@ -117,7 +105,7 @@ begin
   sorry,
 end
 
-example : (a * b)⁻¹ = b⁻¹ * a⁻¹ := 
+example : (a * b)⁻¹ = b⁻¹ * a⁻¹ :=
 begin
   sorry,
 end

@@ -41,7 +41,7 @@ The reason we need to know about function notation for this sheet
 is that a sequence `x₀, x₁, x₂, …` of reals on this sheet will
 be encoded as a function from `ℕ` to `ℝ` sending `0` to `x₀`, `1` to `x₁`
 and so on.
- 
+
 ## Limit of a sequence.
 
 Here's the definition of the limit of a sequence.
@@ -55,7 +55,7 @@ def tends_to (a : ℕ → ℝ) (t : ℝ) : Prop :=
 /-
 
 We've made a definition, so it's our job to now make the API
-for the definition, i.e. prove some basic theorems about it. 
+for the definition, i.e. prove some basic theorems about it.
 -/
 
 -- If your goal is `tends_to a t` and you want to replace it with
@@ -69,7 +69,7 @@ end
 
 -- the eagle-eyed viewers amongst you might have spotted
 -- that `∀ ε > 0, ...` and `∀ ε, ε > 0 → ...` and `∀ ε, 0 < ε → ...`
--- are all definitionally equal, so `refl` sees through them. 
+-- are all definitionally equal, so `refl` sees through them.
 
 /-
 
@@ -84,13 +84,17 @@ but it can't do anything with it if it's a variable.
 /-- The limit of the constant sequence with value 37 is 37. -/
 theorem tends_to_thirtyseven : tends_to (λ n, 37) 37 :=
 begin
-  sorry,
+  intros ε h₁, use 0,
+  intros n h₂, norm_num,
+  exact h₁.lt,
 end
 
 /-- The limit of the constant sequence with value `c` is `c`. -/
 theorem tends_to_const (c : ℝ) : tends_to (λ n, c) c :=
 begin
-  sorry,
+  intros ε h₁, use 0,
+  intros n h₂, norm_num,
+  exact h₁.lt,
 end
 
 /-- If `a(n)` tends to `t` then `a(n) + c` tends to `t + c` -/
@@ -98,13 +102,16 @@ theorem tends_to_add_const {a : ℕ → ℝ} {t : ℝ} (c : ℝ)
   (h : tends_to a t) :
   tends_to (λ n, a n + c) (t + c) :=
 begin
-  sorry,
+  intros ε h₁, cases h ε h₁ with B h₂,
+  use B, intros n h₃, specialize h₂ n h₃,
+  norm_num, exact h₂,
+
   -- hints: make sure you know the maths proof!
   -- use `cases` to deconstruct an `exists`
   -- hypothesis, and `specialize` to specialize
   -- a `forall` hypothesis to specific values.
   -- Look up the explanations of these tactics in Part C
-  -- of the course notes. 
+  -- of the course notes.
 end
 
 -- you're not quite ready for this one yet though.
@@ -112,12 +119,15 @@ end
 example {a : ℕ → ℝ} {t : ℝ} (ha : tends_to a t) :
   tends_to (λ n, - a n) (-t) :=
 begin
-  sorry,
+  intros ε h₁, cases ha ε h₁ with B h₂,
+  use B, intros n h₃, specialize h₂ n h₃,
+  norm_num, rw abs_sub_comm, exact h₂,
+
   -- Try this one. You don't know enough material to do it yet!
   -- Where do you get stuck? The problem is that I didn't teach you
   -- any "API" for (a.k.a. theorems about) the absolute value function |.|.
   -- We need to figure out how to prove |(-x)| = |x|,
   -- or |a - b| = |b - a| or something like that.
   -- Leave this for now and try sheet 4, where you'll learn how to discover these things.
-  -- We'll come back to this example on sheet 5. 
+  -- We'll come back to this example on sheet 5.
 end

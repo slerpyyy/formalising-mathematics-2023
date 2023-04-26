@@ -12,7 +12,9 @@ import solutions.section02reals.sheet3 -- import the definition of `tends_to` fr
 theorem tends_to_neg {a : ℕ → ℝ} {t : ℝ} (ha : tends_to a t) :
   tends_to (λ n, - a n) (-t) :=
 begin
-  sorry,
+  intros ε h₁, cases ha ε h₁ with B h₂,
+  use B, intros n h₃, specialize h₂ n h₃,
+  norm_num, rw abs_sub_comm, exact h₂,
 end
 
 /-
@@ -23,7 +25,7 @@ try and suffer and struggle through the first principles proof.
 BIG piece of advice: write down a complete maths proof first,
 with all the details there. Then, once you know the maths
 proof, try translating it into Lean. Note that a bunch
-of the results we proved in sheet 4 will be helpful. 
+of the results we proved in sheet 4 will be helpful.
 -/
 
 /-- If `a(n)` tends to `t` and `b(n)` tends to `u` then `a(n) + b(n)`
@@ -32,7 +34,11 @@ theorem tends_to_add {a b : ℕ → ℝ} {t u : ℝ}
   (ha : tends_to a t) (hb : tends_to b u) :
   tends_to (λ n, a n + b n) (t + u) :=
 begin
-  sorry
+  intros ε h₁, cases ha ε h₁ with B₁ h₂, cases hb ε h₁ with B₂ h₃,
+  use B₁ + B₂, intros n h₄, specialize h₂ n (by linarith),
+  specialize h₃ n (by linarith), norm_num,
+
+  sorry,
 end
 
 /-- If `a(n)` tends to t and `b(n)` tends to `u` then `a(n) - b(n)`
@@ -41,7 +47,8 @@ theorem tends_to_sub {a b : ℕ → ℝ} {t u : ℝ}
   (ha : tends_to a t) (hb : tends_to b u) :
   tends_to (λ n, a n - b n) (t - u) :=
 begin
-  -- this one follows without too much trouble from earlier results.
-  sorry
-end
+  have h := tends_to_add ha (tends_to_neg hb),
+  simp [←sub_eq_add_neg] at h, exact h,
 
+  -- this one follows without too much trouble from earlier results.
+end

@@ -27,51 +27,30 @@ and also the following tactics:
 variables (P Q R : Prop)
 
 example : P ∧ Q → P :=
-begin
-  sorry
-end
+and.left
 
 example : P ∧ Q → Q :=
-begin
-  sorry
-end
+and.right
 
 example : (P → Q → R) → (P ∧ Q → R) :=
-begin
-  sorry
-end
+and.rec
 
 example : P → Q → P ∧ Q :=
-begin
-  sorry
-end
+and.intro
 
 /-- `∧` is symmetric -/
 example : P ∧ Q → Q ∧ P :=
-begin
-  sorry
-end
+and.swap
 
 example : P → P ∧ true :=
-begin
-  sorry
-end
+λ x, ⟨x, ⟨⟩⟩
 
 example : false → P ∧ false :=
-begin
-  sorry
-end
+false.elim
 
 /-- `∧` is transitive -/
 example : (P ∧ Q) → (Q ∧ R) → (P ∧ R) :=
-begin
-  sorry,
-end
+λ x y, ⟨x.1, y.2⟩
 
 example : ((P ∧ Q) → R) → (P → Q → R) :=
-begin
-  sorry,
-end
-
-
-
+λ f x y, f ⟨x, y⟩

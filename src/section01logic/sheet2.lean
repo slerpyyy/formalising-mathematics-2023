@@ -29,51 +29,31 @@ if you can understand what's going on.
 variables (P Q R : Prop)
 
 example : true :=
-begin
-  sorry
-end
+⟨⟩
 
 example : true → true :=
-begin
-  sorry
-end
+id
 
 example : false → true :=
-begin
-  sorry
-end
+false.elim
 
 example : false → false :=
-begin
-  sorry
-end
+id
 
 example : (true → false) → false :=
-begin
-  sorry
-end
+λ f, f ⟨⟩
 
 example : false → P :=
-begin
-  sorry
-end
+false.elim
 
 example : true → false → true → false → true → false :=
-begin
-  sorry
-end
+λ _ x _ _ _, x
 
 example : P → ((P → false) → false) :=
-begin
-  sorry
-end
+λ x f, f x
 
 example : (P → false) → P → Q :=
-begin
-  sorry
-end
+λ f x, (f x).elim
 
 example : (true → false) → P :=
-begin
-  sorry
-end
+λ f, (f ⟨⟩).elim

@@ -28,7 +28,7 @@ begin
   sorry
 end
 
-example : ∀ (a b : ℝ), ∃ x, 
+example : ∀ (a b : ℝ), ∃ x,
   (a + b) ^ 3 = a ^ 3 + x * a ^ 2 * b + 3 * a * b ^ 2 + b ^ 3 :=
 begin
   sorry,
