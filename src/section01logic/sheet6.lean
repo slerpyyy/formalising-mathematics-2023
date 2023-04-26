@@ -64,6 +64,6 @@ example : ¬ (P ∨ Q) ↔ ¬ P ∧ ¬ Q :=
 ⟨λ h, ⟨h ∘ or.inl, h ∘ or.inr⟩, λ ⟨x, y⟩ h, h.elim x y⟩
 
 example : ¬ (P ∧ Q) ↔ ¬ P ∨ ¬ Q :=
-not_and_distrib
---⟨λ f, by_contra (λ g, g (or.inl (λ x, g (or.inr (λ y, f ⟨x, y⟩))))),
---  λ h, h.elim (λ f x, f x.1) (λ f x, f x.2)⟩
+--not_and_distrib
+⟨λ f, by_contra (λ g, g (or.inl (λ x, g (or.inr (λ y, f ⟨x, y⟩))))),
+  λ h, h.elim (λ f x, f x.1) (λ f x, f x.2)⟩

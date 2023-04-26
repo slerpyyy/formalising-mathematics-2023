@@ -41,6 +41,7 @@ and.intro
 /-- `∧` is symmetric -/
 example : P ∧ Q → Q ∧ P :=
 and.swap
+--and.comm.mp
 
 example : P → P ∧ true :=
 λ x, ⟨x, ⟨⟩⟩

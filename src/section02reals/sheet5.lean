@@ -34,11 +34,15 @@ theorem tends_to_add {a b : ℕ → ℝ} {t u : ℝ}
   (ha : tends_to a t) (hb : tends_to b u) :
   tends_to (λ n, a n + b n) (t + u) :=
 begin
-  intros ε h₁, cases ha ε h₁ with B₁ h₂, cases hb ε h₁ with B₂ h₃,
-  use B₁ + B₂, intros n h₄, specialize h₂ n (by linarith),
-  specialize h₃ n (by linarith), norm_num,
-
-  sorry,
+  intros ε h₁,
+  cases ha (ε / 2) (by linarith) with B₁ h₂,
+  cases hb (ε / 2) (by linarith) with B₂ h₃,
+  use (max B₁ B₂), intros n h₄,
+  calc |a n + b n - (t + u)| = |(a n - t) + (b n - u)| : by ring_nf
+  ... ≤ |a n - t| + |b n - u| :  abs_add _ _
+  ... < (ε / 2) + (ε / 2) : add_lt_add
+    (h₂ n (le_of_max_le_left h₄)) (h₃ n (le_of_max_le_right h₄))
+  ... = ε : by norm_num,
 end
 
 /-- If `a(n)` tends to t and `b(n)` tends to `u` then `a(n) - b(n)`
