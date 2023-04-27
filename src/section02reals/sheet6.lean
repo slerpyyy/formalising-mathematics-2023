@@ -23,7 +23,7 @@ you can do. I will go through them all in a solutions video,
 so if you like you can try some of them and then watch me
 solving them.
 
-Good luck! 
+Good luck!
 -/
 
 
@@ -31,7 +31,13 @@ Good luck!
 theorem tends_to_thirtyseven_mul (a : ℕ → ℝ) (t : ℝ) (h : tends_to a t) :
   tends_to (λ n, 37 * a n) (37 * t) :=
 begin
-  sorry,
+  have hc : 0 < (37 : ℝ) := by norm_num,
+  intros ε h₁, cases h (ε / 37) (div_pos h₁ hc) with B h₂,
+  use B, intros n h₃, specialize h₂ n h₃,
+  calc |37 * a n - 37 * t| = |37 * (a n - t)| : by ring_nf
+  ... = 37 * |a n - t| : by rw [abs_mul, abs_of_pos hc]
+  ... < 37 * (ε / 37) : (mul_lt_mul_left hc).mpr h₂
+  ... = ε : mul_div_cancel' _ (ne_of_gt hc),
 end
 
 /-- If `a(n)` tends to `t` and `c` is a positive constant then
@@ -39,7 +45,12 @@ end
 theorem tends_to_pos_const_mul {a : ℕ → ℝ} {t : ℝ} (h : tends_to a t)
   {c : ℝ} (hc : 0 < c) : tends_to (λ n, c * a n) (c * t) :=
 begin
-  sorry,
+  intros ε h₁, cases h (ε / c) (div_pos h₁ hc) with B h₂,
+  use B, intros n h₃, specialize h₂ n h₃,
+  calc |c * a n - c * t| = |c * (a n - t)| : by ring_nf
+  ... = c * |a n - t| : by rw [abs_mul, abs_of_pos hc]
+  ... < c * (ε / c) : (mul_lt_mul_left hc).mpr h₂
+  ... = ε : mul_div_cancel' _ (ne_of_gt hc),
 end
 
 /-- If `a(n)` tends to `t` and `c` is a negative constant then
